@@ -16,7 +16,6 @@ class UserManager(BaseUserManager):
         user = self.model(email=email, **extra_fields)
         user.set_password(password)
         user.is_active = True
-        user.send_activation_code()
         user.save(using=self._db)
         return user
 
