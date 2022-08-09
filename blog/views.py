@@ -38,3 +38,14 @@ def comment_update(request, c_id):
     if serializer.is_valid(raise_exception=True):
         serializer.save()
         return Response("Вы успешно обновили ваш комментарий")
+
+@api_view(["GET"])
+def toggle_like(request, p_id):
+    user = request.user
+    post = get_object_or_404(Post, id=p_id)
+    
+    if Like.objects.filter(user=user, post=post).exists():
+        Like.objects.filter(user=user, post=post).delete()
+    else:
+        Like.objects.create(user=user, post=post)
+    return Response("Like toggled", 200)
