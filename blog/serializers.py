@@ -11,10 +11,9 @@ class PostSerializer(serializers.ModelSerializer):
         rep["comments"] = CommentSerializers(instance.comments.all(), many=True).data
         rep["likes"] = instance.likes.all().count()
         rep["liked_by_user"] = False
-        rep["user_rating"] = 0
         request = self.context.get("request")
         if request.user.is_authenticated:
-            rep["liked_by_user"] = Like.objects.filter(user=request.user, product=instance).exists()
+            rep["liked_by_user"] = Like.objects.filter(user=request.user, post=instance).exists()
         return rep
 
 class CommentSerializers(serializers.ModelSerializer):
