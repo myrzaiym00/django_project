@@ -4,13 +4,16 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from django.shortcuts import get_object_or_404
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+
+from blog.permissions import IsAuthor
 from .serializers import CommentSerializers, PostSerializer
 from .models import Comment, Post, Like
+from .permissions import IsAuthor
 
 class PostViewSet(ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAuthenticatedOrReadOnly, IsAuthor]
 
     def get_serializer_context(self):
         context =  super().get_serializer_context()
