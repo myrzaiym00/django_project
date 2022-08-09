@@ -17,6 +17,9 @@ class PostViewSet(ModelViewSet):
         context["request"] = self.request
         return context
 
+
+
+#Бекназ
 @api_view(["POST"])
 def create_comment(request):
     serializer = CommentSerializers(data=request.POST)
