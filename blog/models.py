@@ -8,6 +8,7 @@ class Post(models.Model):
     body = models.TextField()
     created_at = models.DateField(auto_now_add=True)
     user = models.ForeignKey(User, related_name='posts', on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='posts', null=True, blank=True)
 
     def __str__(self):
         return f"{self.user.username} => {self.title}"
