@@ -1,6 +1,12 @@
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
+from django.shortcuts import get_object_or_404
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from .serializers import CommentSerializers, PostSerializer
+from .models import Comment
+
 class PostViewSet(ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
@@ -10,13 +16,6 @@ class PostViewSet(ModelViewSet):
         context =  super().get_serializer_context()
         context["request"] = self.request
         return context
-
-from django.shortcuts import get_object_or_404
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
-from .serializers import CommentSerializers
-from .models import Comment
-
 
 @api_view(["POST"])
 def create_comment(request):
