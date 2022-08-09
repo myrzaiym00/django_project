@@ -5,7 +5,7 @@ from django.shortcuts import get_object_or_404
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .serializers import CommentSerializers, PostSerializer
-from .models import Comment, Post
+from .models import Comment, Post, Like
 
 class PostViewSet(ModelViewSet):
     queryset = Post.objects.all()
@@ -17,6 +17,9 @@ class PostViewSet(ModelViewSet):
         context["request"] = self.request
         return context
 
+
+
+#Бекназ
 @api_view(["POST"])
 def create_comment(request):
     serializer = CommentSerializers(data=request.POST)
