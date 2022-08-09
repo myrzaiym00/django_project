@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+
 User = get_user_model()
 
 class Post(models.Model):
@@ -11,9 +12,6 @@ class Post(models.Model):
     def __str__(self):
         return f"{self.user.username} => {self.title}"
 
-from .serializers import CommentSerializers
-from .models import Comment
-
 
 class Comment(models.Model):
     body = models.TextField()
@@ -24,3 +22,9 @@ class Comment(models.Model):
     def __str__(self):
         return f"Comment{self.user.username} -> {self.post.title} [{self.created_at}]"
 
+
+class Like(models.Model):
+    user = models.ForeignKey(User, related_name='likes', on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, related_name='likes', on_delete=models.CASCADE)
+    def __str__(self):
+        return f"Like{self.user.username} -> {self.post.title} [{self.created_at}]"
